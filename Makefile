@@ -6,7 +6,7 @@ NAME	= badapple
 
 CC		= cc
 
-CFLAGS	= -Wall -Wextra -Werror -O2
+CFLAGS	= -O2
 
 RM		= rm -f
 
