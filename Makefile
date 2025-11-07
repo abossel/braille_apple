@@ -1,4 +1,4 @@
-SRCS	= badapple.c
+SRCS	= badapple.c sparkle.c
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -6,7 +6,7 @@ NAME	= badapple
 
 CC		= cc
 
-CFLAGS	= -O2
+CFLAGS	= -Wall -Wextra -Werror -O2
 
 RM		= rm -f
 
