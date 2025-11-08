@@ -14,16 +14,28 @@
 void copy_frame_to_display(t_sparkle *s, char *frame)
 {
     int x, y, i;
+    char byte, colour;
 
-    // copy each bit from the frame to 1 byte on the display
-    // each byte in the frame data stores 8 pixels
+    byte = 0;
+    colour = 0;
     i = 0;
     for (y = 0; y < DISPLAY_HEIGHT; y++)
     {
         for (x = 0; x < DISPLAY_WIDTH; x++)
         {
-            sparkle_set_pixel(s, x, y, (frame[i / 8] >> (7 - (i % 8))) & 0x1);
-            i++;
+            // compressed data use the first bit to indicate the colour
+            // the remaining 7 bits show the length of that colour
+            if (byte == 0)
+            {
+                if (frame[i] == '\0')
+                    return;
+                byte = frame[i];
+                colour = (byte & 0x80) >> 7;
+                byte &= 0x7f;
+                i++;
+            }
+            byte--;
+            sparkle_set_pixel(s, x, y, colour);
         }
     }
 }
